@@ -55,8 +55,18 @@ N**etBeans IDE:** Onde o projeto foi desenvolvido e é otimizado para abertura: 
 **3. Criação do Esquema e Tabelas:** Execute os comandos SQL subsequentes para estabelecer o esquema de banco de dados (vendas_ingressos) e todas as tabelas requeridas pelo sistema:
 
 ```sql
+
 CREATE DATABASE IF NOT EXISTS vendas_ingressos;
 USE vendas_ingressos;
+
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nome_usuario VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    tipo_usuario VARCHAR(50) NOT NULL, 
+    data_nascimento DATE
+);
 
 CREATE TABLE IF NOT EXISTS eventos (
     id_evento INT AUTO_INCREMENT PRIMARY KEY,
@@ -68,27 +78,19 @@ CREATE TABLE IF NOT EXISTS eventos (
     ingressos_disponiveis INT DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS usuarios (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    nome_usuario VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    tipo_usuario VARCHAR(50) NOT NULL,
-    data_nascimento DATE
-);
-
 CREATE TABLE IF NOT EXISTS ingressos (
-    codigo_unico VARCHAR(50) PRIMARY KEY,
-    tipo_ingresso VARCHAR(100) NOT NULL,
+    codigo_unico VARCHAR(50) PRIMARY KEY, 
+    tipo_ingresso VARCHAR(100) NOT NULL, 
     preco DECIMAL(10, 2) NOT NULL,
-    id_evento INT NOT NULL,
+    id_evento INT NOT NULL, 
     FOREIGN KEY (id_evento) REFERENCES eventos(id_evento)
 );
 
 CREATE TABLE IF NOT EXISTS vendas (
     numero_venda INT AUTO_INCREMENT PRIMARY KEY,
     data_venda DATE NOT NULL,
-    id_comprador INT NOT NULL,
-    codigo_ingresso_vendido VARCHAR(50) NOT NULL,
+    id_comprador INT NOT NULL, 
+    codigo_ingresso_vendido VARCHAR(50) NOT NULL, 
     quantidade INT NOT NULL,
     valor_total DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (id_comprador) REFERENCES usuarios(id_usuario),
